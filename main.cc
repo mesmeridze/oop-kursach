@@ -1,23 +1,15 @@
 #include "class.h"
 #include "function.h"
-//tests
 
 int main (){
 
 	char choice;
 	menu Menus;
-	/*char test[255];
-
-	strcpy (test,"Hello OOP");
-	book current;	
-	current.setBookMem(test);
-	cout << current.getBookAuthor();
-	*/
+	book loc;
+	char buffer[255];
 
 	while (true) {
 
-	//	choice = Menus.drawMenuMain();
-		
 		switch (Menus.drawMenuMain()) {
 			case '0': exit(0);
 				break;
@@ -26,8 +18,19 @@ int main (){
 
 					switch (choice = Menus.drawMenuBook()){
 						case '1':
+							loc.showBooks();
 							break; 
+
 						case '2':
+							system ("clear");
+							buffer[0]='\0';
+							cout << "Введіть назву книжки:";
+							cin.ignore();
+							cin.getline(buffer,sizeof(buffer));
+							cout << "===" << buffer << "===" << endl;
+							sleep (5);
+							//loc.setBookName(buffer);
+
 							break; 
 						case '3':
 							break; 

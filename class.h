@@ -1,9 +1,14 @@
 #include <iostream>
 #include <string.h>
-#include <curses.h>
+#include <string>
+//#include <curses.h>
 #include <stdlib.h>
+#include <fstream>
+#include <unistd.h>
+#include <stdio.h>
 
-#define DB_BOOK
+
+#define DB_BOOK "FILES/OBJ.txt"
 #define DB_ABITUR
 
 
@@ -12,13 +17,16 @@ using namespace std;
 class	book {
 
 private:
-	char  book_author[255];
-	char  book_name[255];
-	float book_printed;
-	long  book_date;
+	char  	book_name[255];
+	char  	book_author[255];
+	char	book_pagenum[256];
+
 public:
 		void setBookMem (char *);
 		char * getBookAuthor (void);
+		void showBooks (void);
+		void setBookName(char *);
+		book ();
 };
 
 class	menu {

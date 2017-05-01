@@ -1,3 +1,8 @@
+book::book(){
+	book_name[0]='\0';
+	book_author[0]='\0';
+	book_pagenum[0]='\0';
+}
 
 void book::setBookMem(char  *newBook){
 	strcpy (book_author, newBook);
@@ -5,6 +10,12 @@ void book::setBookMem(char  *newBook){
 
 char * book::getBookAuthor(){
 	return (book_author);
+}
+
+void book::setBookName(char buffer[255]){
+	strcat(book_name, buffer);
+	printf ("%s\n",book_name);
+	sleep (3);
 }
 
 char menu::drawMenuMain (){
@@ -19,7 +30,6 @@ char menu::drawMenuMain (){
 	cout << "4. Налаштування" << "\n";
 	cout << "0. Завершення роботи з програмою" << "\n";
 	cout << "--------------------------" << "\n";
-
 	return getchar();
 }
 
@@ -70,4 +80,45 @@ char menu::drawMenuAbiWork (){
 	cout << "--------------------------" << "\n";
 
 	return getchar();
+}
+
+void book::showBooks (void){
+
+	char buffer[256];
+        buffer[0]='\0';
+        fstream read_file(DB_BOOK, ios::binary | ios::in);
+	read_file.seekg (0, std::ios::beg);
+        if (!read_file.is_open()){
+                cout << "Неможливо відкрити бібліотеку книжок" << endl;
+		sleep (3);
+                exit (0);
+        }
+        int i=1;
+	system ("clear");
+        printf ("%-30s%-30s%-30s\n","Назва", "Автор", "Кількість сторінок");
+
+        while (read_file.read(buffer, sizeof(buffer))){
+                switch (i){
+                        case 1:
+                                book_name[0]='\0';
+                                strcat (book_name,buffer);
+                                break;
+                        case 2:
+                                book_author[0]='\0';
+                                strcat (book_author,buffer);
+                                break;
+                        case 3:
+                                book_pagenum[0]='\0';
+                                strcat (book_pagenum,buffer);
+                                printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
+                                i=0;
+                                break;
+                        default:
+                                break;
+                }
+                i++;
+		buffer[0]='\0';
+        }
+
+	sleep (5);
 }
