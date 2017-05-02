@@ -1,0 +1,36 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdlib.h>
+
+using namespace std;
+
+main (){
+
+
+	char buffer[100];
+	float fl_read;
+	fstream read_file("OBJ.txt", ios::binary | ios::in);
+
+	buffer[0]='\0';
+	read_file.read((char*)&buffer, sizeof(buffer)); 
+	cout << "First read:" << buffer << endl;
+
+	buffer[0]='\0';
+	read_file.read((char*)&buffer, sizeof(buffer)); 
+	cout << "Second read:" << buffer << endl;
+
+	read_file.read((char*)&buffer, sizeof(fl_read)); 
+	cout << "Third read:" << fl_read << endl;
+/*
+	read_file.read((char*)&buffer, sizeof buffer); 
+	cout << "Number is:" << buffer << endl;
+
+	read_file.read((char*)&buffer, sizeof buffer); 
+	cout << "Number is:" << buffer << endl;
+*/
+
+	read_file.close();
+
+}
+

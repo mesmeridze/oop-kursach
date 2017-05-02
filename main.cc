@@ -6,7 +6,7 @@ int main (){
 	char choice;
 	menu Menus;
 	book loc;
-	char buffer[255];
+	setlocale(LC_ALL, "Russian");
 
 	while (true) {
 
@@ -22,14 +22,27 @@ int main (){
 							break; 
 
 						case '2':
-							system ("clear");
-							buffer[0]='\0';
-							cout << "Введіть назву книжки:";
-							cin.ignore();
-							cin.getline(buffer,sizeof(buffer));
-							cout << "===" << buffer << "===" << endl;
-							sleep (5);
-							//loc.setBookName(buffer);
+							if (loc.setBookAll()==1) break;
+							cout << string(50, '\n');
+							cout << "\033[2;1H";
+
+							cout << "Додаю наступну книжку:" << endl;
+							cout << "Назва:"  << loc.getBookAll(1) << endl;
+							cout << "Автор:" << loc.getBookAll(2) << endl;
+							cout << "Сторінок:" << loc.getBookAll(3) << endl << endl;
+							while (true){
+								switch (choice = Menus.drawMenuBookAdd()){
+									case '1':
+										loc.addBook();
+										break;
+									case '2':
+										break;
+									default:
+										break;
+								}
+								if ((choice=='1') || (choice=='2')) break;
+							}
+
 
 							break; 
 						case '3':

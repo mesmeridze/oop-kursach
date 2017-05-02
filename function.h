@@ -12,10 +12,69 @@ char * book::getBookAuthor(){
 	return (book_author);
 }
 
-void book::setBookName(char buffer[255]){
-	strcat(book_name, buffer);
-	printf ("%s\n",book_name);
-	sleep (3);
+int book::setBookAll(void){
+
+	char buffer[256];
+	system ("clear");
+	cout << "Введіть назву книжки:";
+	cin.ignore();
+	cin.getline(book_name,sizeof(book_name));
+
+	cout << "Введіть автора:";
+	book_author[0]='\0';
+	cin.getline(book_author,sizeof(book_author));
+
+	book_pagenum[0]='\0';
+	cout << "Введіть кількість сторінок у друкованих аркушах:";
+	cin.getline(book_pagenum,sizeof(book_pagenum));
+
+        int i=3;
+        buffer[0]='\0';
+        fstream read_file(DB_BOOK, ios::binary | ios::in);
+        while (read_file.read((char*)&buffer, sizeof(buffer))){
+
+                if ((i % 3)==0) {
+                        if (strcmp(buffer, book_name) == 0) {
+				system ("clear");
+                                cout << "Така книжка вже є у бібліотеці" << endl;
+                                read_file.close();
+				cout << "\n\nКлацність Enter, щоб повернутись у попереднє меню" << endl;
+				cin.getline(buffer,sizeof(buffer));
+                                return 1;
+                        }
+                }
+                buffer[0]='\0';
+                i++;
+        }
+        read_file.close();
+
+}
+
+void book::addBook(void){
+
+	fstream write_file(DB_BOOK, ios::binary | ios::out | ios::app);
+	write_file.write((char*)&book_name, sizeof(book_name));
+	write_file.write((char*)&book_author, sizeof(book_author));
+	write_file.write((char*)&book_pagenum, sizeof(book_pagenum));
+
+	write_file.close();
+
+}
+
+char * book::getBookAll(int i){
+	switch (i){
+		case 1:
+			return book_name;
+			break;
+		case 2:
+			return book_author;
+			break;
+		case 3:
+			return book_pagenum;
+			break;
+		default:
+			break;
+	}
 }
 
 char menu::drawMenuMain (){
@@ -47,6 +106,15 @@ char menu::drawMenuBook (){
 	cout << "--------------------------" << "\n";
 
 	return getchar();
+}
+
+char menu::drawMenuBookAdd (){
+
+        cout << "1. Додати книжку" << "\n";
+        cout << "2. Повернутись у попереднє меню" << "\n";
+        cout << "--------------------------" << "\n";
+
+        return getchar();
 }
 
 char menu::drawMenuAbiturient(){
@@ -110,7 +178,11 @@ void book::showBooks (void){
                         case 3:
                                 book_pagenum[0]='\0';
                                 strcat (book_pagenum,buffer);
-                                printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
+                                //printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
+                                cout << setfill (' ') << left << setw(40)  << book_name
+				     << setfill (' ') << left << setw(40)  << book_author 
+				     << left << setw(30)  << book_pagenum
+				     << endl;
                                 i=0;
                                 break;
                         default:
@@ -119,6 +191,8 @@ void book::showBooks (void){
                 i++;
 		buffer[0]='\0';
         }
-
-	sleep (5);
+	cout << endl << endl;
+	cout << "Клацність Enter, щоб повернутись у попереднє меню" << endl;
+	cin.ignore();
+	cin.getline(buffer,sizeof(buffer));
 }
