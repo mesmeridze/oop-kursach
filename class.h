@@ -21,8 +21,8 @@ private:
 	char	book_pagenum[256];
 
 public:
-		void setBookMem (char *);
-		char * getBookAuthor (void);
+	/*	void setBookMem (char *); */
+	/*		char * getBookAuthor (void); */
 		void showBooks (void);
 		int setBookAll(void);
 		char * getBookAll(int);

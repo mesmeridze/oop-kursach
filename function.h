@@ -4,13 +4,15 @@ book::book(){
 	book_pagenum[0]='\0';
 }
 
-void book::setBookMem(char  *newBook){
+/*void book::setBookMem(char  *newBook){
 	strcpy (book_author, newBook);
 }
+*/
 
-char * book::getBookAuthor(){
+/*char * book::getBookAuthor(){
 	return (book_author);
 }
+*/
 
 int book::setBookAll(void){
 
@@ -179,10 +181,20 @@ void book::showBooks (void){
                                 book_pagenum[0]='\0';
                                 strcat (book_pagenum,buffer);
                                 //printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
-                                cout << setfill (' ') << left << setw(40)  << book_name
-				     << setfill (' ') << left << setw(40)  << book_author 
-				     << left << setw(30)  << book_pagenum
-				     << endl;
+
+                                cout 	<< left 
+					<< setw(5)
+					<< book_name;
+
+				cout 	<< right 
+				       	<< setw(5)
+				      	<< book_author; 
+
+			//	cout 	<< right 
+			//	       	<< setw(5)
+			//	      	<< book_pagenum;
+				cout	<< endl;
+
                                 i=0;
                                 break;
                         default:

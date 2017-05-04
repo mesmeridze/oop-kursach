@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -40,7 +41,9 @@ main (){
 			case 3: 
 				book_pagenum[0]='\0';
 				strcat (book_pagenum,buffer);
-				printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
+				//printf ("%-30s\t%-30s\t%-30s\n",book_name,book_author,book_pagenum);
+				cout << setw (20) << left << book_name;
+				cout << setw (20) << left << setfill('-')  << book_author << endl;
 				i=0;
 				break;
 			default:
